@@ -1,0 +1,3 @@
+SELECT * FROM Konsulter 
+WHERE TimPris > 1200
+ORDER BY TimPris DESC

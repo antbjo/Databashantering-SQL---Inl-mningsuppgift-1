@@ -1,0 +1,8 @@
+DELETE FROM KUNDER 
+WHERE NOT EXISTS (
+	SELECT 1
+	FROM Uppdrag
+	WHERE Uppdrag.KundId = Kunder.Id
+);
+
+SELECT * FROM Kunder
