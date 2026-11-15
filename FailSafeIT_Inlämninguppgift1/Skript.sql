@@ -79,6 +79,34 @@ INSERT INTO Uppdrag (StartDatum, SlutDatum, RollBeskrivning, KonsultId, KundId) 
 INSERT INTO Uppdrag (StartDatum, SlutDatum, RollBeskrivning, KonsultId, KundId) VALUES ('2027-01-01', '2027-02-28', 'Implementering av CI/CD-pipeline', 5, 1)
 INSERT INTO Uppdrag (StartDatum, SlutDatum, RollBeskrivning, KonsultId, KundId) VALUES ('2026-12-01', '2027-03-25', 'Driftoptimering', 4, 1)
 
-SELECT * FROM Kunder
+-- Fråga A
+SELECT * FROM Konsulter 
+WHERE TimPris > 1200
+ORDER BY TimPris DESC
+
+-- Fråga B
+SELECT u.RollBeskrivning AS Uppdrag, ku.FöretagsNamn AS Företag, ko.Namn AS Konsult, u.StartDatum AS Startdatum, u.SlutDatum AS Slutdatum
+FROM Kunder ku
+INNER JOIN Uppdrag u ON ku.Id = u.KundId
+INNER JOIN Konsulter ko ON ko.Id = u.KonsultId
+
+-- Fråga C
+SELECT k.FöretagsNamn, COUNT (u.Id) AS [Antal uppdrag]
+FROM Kunder k
+INNER JOIN Uppdrag u ON k.Id = u.KundId
+GROUP BY k.FöretagsNamn
+
+-- Fråga D
+UPDATE Konsulter
+SET TimPris = 2000
+WHERE Id = 1
 SELECT * FROM Konsulter
-SELECT * FROM Uppdrag
+
+-- Fråga E
+DELETE FROM KUNDER 
+WHERE NOT EXISTS (
+	SELECT 1
+	FROM Uppdrag
+	WHERE Uppdrag.KundId = Kunder.Id
+);
+SELECT * FROM Kunder
